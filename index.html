@@ -1,0 +1,110 @@
+<style>
+.slider_li {
+  background: #ffffff;
+  border: 1px solid #e7e7e7;
+    border-top-color: rgb(231, 231, 231);
+    border-right-color: rgb(231, 231, 231);
+    border-bottom-color: rgb(231, 231, 231);
+    border-left-color: rgb(231, 231, 231);
+  margin: 0 1em;
+  padding: 2em;
+  transition: left .3s ease-in-out, top .3s ease-in-out;
+}
+
+.slider_li h3 {
+    font-weight: 600;
+}
+
+.slider_li .testimonial-info i {
+    color: #000000
+}
+
+.slider_li .testimonial-info div.author {
+    font-weight: 400;
+    font-size: 14px;
+    color: #666666;
+}
+
+.slider_li .testimonial-info {
+  width: 100%;
+}
+
+.slider_li .testimonial-info h3 {
+  display: inline-block;
+  margin-bottom: 0;
+}
+
+.slider_li .testimonial-info .rating {
+  float: right;
+  margin-top: 5px;
+}
+
+.slick-dots li button::before {
+    font-size: 12px;
+    content: '\2022';
+}
+</style>
+
+<div class="slider">
+<ul class="slider_items slider_get">
+
+</ul>
+</div>
+		
+<script>
+jQuery(document).ready(function() {
+    jQuery.ajax({
+    url: '/app/get-testimonials',
+    success: function(response) {
+      response.forEach(function(dataItem) {
+        var html = '<div><div class="slider_li"><div class="testimonial-info">';
+        html += '<h3>' + dataItem.name + '</h3>';
+        html += '<span class="rating"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></span>';
+        html += '<div class="author">' + dataItem.company_author + '</div>';
+        html += '</div>';
+        html += '<p>' + dataItem.description + '</p></div></div>';
+        jQuery('.slider_get').append(html);
+        jQuery('.slider_items').slick({
+        centerMode: true,
+        centerPadding: '400px',
+        infinite: true,
+        slidesToShow: 1,
+        dots: true,
+        autoplay: true,
+        autoplaySpeed: 4000,
+        responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                    centerPadding: '100px',
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    infinite: true,
+                    dots: true
+                }
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                    centerPadding: '100px',
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    centerPadding: '1px',
+                }
+            }
+            // You can unslick at a given breakpoint now by adding:
+            // settings: "unslick"
+            // instead of a settings object
+        ]
+    });
+      });
+    }
+  });
+});
+
+</script>
