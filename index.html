@@ -56,14 +56,16 @@ jQuery(document).ready(function() {
     jQuery.ajax({
     url: '/app/get-testimonials',
     success: function(response) {
+      var html = ''
       response.forEach(function(dataItem) {
-        var html = '<div><div class="slider_li"><div class="testimonial-info">';
+        html += '<div class="slider_li"><div class="testimonial-info">';
         html += '<h3>' + dataItem.name + '</h3>';
         html += '<span class="rating"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></span>';
         html += '<div class="author">' + dataItem.company_author + '</div>';
         html += '</div>';
-        html += '<p>' + dataItem.description + '</p></div></div>';
-        jQuery('.slider_get').append(html);
+        html += '<p>' + dataItem.description + '</p></div>';
+      })
+        jQuery('.slider_get').append(html)
         jQuery('.slider_items').slick({
         centerMode: true,
         centerPadding: '400px',
@@ -102,7 +104,6 @@ jQuery(document).ready(function() {
             // instead of a settings object
         ]
     });
-      });
     }
   });
 });
